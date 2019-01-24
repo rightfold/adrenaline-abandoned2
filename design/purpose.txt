@@ -1,0 +1,1 @@
+Continuously monitor objects and generate alerts when the objects are bad.

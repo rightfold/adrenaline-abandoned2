@@ -1,0 +1,59 @@
+administrator
+
+    Actor that is in charge of configuring monitors.
+
+alert
+
+    Event that is sent to a guard.
+
+alerter
+
+    Daemon that queries the database for event classes and statuses, computes
+    events, and sends alerts to guards.
+
+configuration
+
+    Collection of monitors and event classes.
+
+configurator
+
+    Web application that the administrator uses to alter the configuration.
+
+database
+
+    Place where configuration, statuses, and events are stored.
+
+event
+
+    Reduction of statuses. The administrator gives a reduction function for
+    each event class.
+
+event class
+
+    Description of how to reduce statuses to events.
+
+guard
+
+    Actor that is on duty to respond to alerts.
+
+monitor
+
+    Description of how to query an object for its status.
+
+object
+
+    Entity that is being monitored.
+
+poller
+
+    Daemon that queries the database for scheduled monitors, polls objects,
+    and stores statuses in the database.
+
+proof
+
+    Evidence that the object is owned by the administrator.
+
+status
+
+    A number that indicates the status of an object. This is deliberately
+    abstract; it is up to the administrator how to interpret these.

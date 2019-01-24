@@ -1,0 +1,29 @@
+digraph {
+    node [width="2", height="1"]
+
+    database [label="Database", shape="cylinder"]
+
+    alerter [label="Alerter", shape="box3d"]
+    aggregator [label="Aggregator", shape="box"]
+    configurator [label="Configurator", shape="box3d"]
+    poller [label="Poller", shape="box3d"]
+
+    guard [label="Guard", shape="box", style="dashed"]
+    object [label="Object", shape="box", style="dashed"]
+    administrator [label="Administrator", shape="box", style="dashed"]
+
+    configurator -> database [dir="both", label="Configuration"]
+    administrator -> configurator [dir="both", label="Configuration"]
+    object -> configurator [label="Proof"]
+
+    database -> poller [label="Monitor"]
+    poller -> database [label="Status"]
+    object -> poller [label="Status"]
+
+    database -> aggregator [label="Status"]
+    database -> aggregator [label="Event class"]
+    aggregator -> database [label="Event"]
+
+    database -> alerter [label="Event"]
+    alerter -> guard [label="Alert"]
+}

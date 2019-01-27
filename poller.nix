@@ -1,8 +1,9 @@
-{stdenv, makeWrapper, rakudo}:
+{lib, stdenv, makeWrapper, postgresql100, rakudo}:
+let libs = lib.makeLibraryPath [postgresql100]; in
 stdenv.mkDerivation {
     name = "poller";
     src = ./src;
-    buildInputs = [makeWrapper rakudo];
+    buildInputs = [makeWrapper postgresql100 rakudo];
     phases = ["unpackPhase" "installPhase" "fixupPhase"];
     installPhase = ''
         makeShare() {
@@ -12,6 +13,7 @@ stdenv.mkDerivation {
         makeBin() {
             makeWrapper "${rakudo}/bin/perl6" "$1"                          \
                 --prefix 'PERL6LIB' ',' "$out/share/lib"                    \
+                --prefix 'LD_LIBRARY_PATH' ':' '${libs}'                    \
                 --add-flags "$2"
         }
 
@@ -24,10 +26,12 @@ stdenv.mkDerivation {
 
         makeShare 'lib/Adrenaline/Poller/Monitor.pm6'
         makeShare 'lib/Adrenaline/Poller/Poll.pm6'
+        makeShare 'lib/Database/PostgreSQL.pm6'
 
         makeShare 'bin/poller.p6'
         makeBin "$out/bin/poller" "$out/share/bin/poller.p6"
 
         makeTest 'Adrenaline/Poller/PollTest'
+        makeTest 'Database/PostgreSQLTest'
     '';
 }

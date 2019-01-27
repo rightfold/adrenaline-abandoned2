@@ -3,3 +3,4 @@
 
 schema 2019-01-27T21:07:53Z r <r@chloe-notebook> # Add schema
 monitors [schema] 2019-01-27T21:16:13Z r <r@chloe-notebook> # Add monitors table
+polls [monitors] 2019-01-27T21:34:22Z r <r@chloe-notebook> # Add polls table

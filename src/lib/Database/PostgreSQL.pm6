@@ -59,6 +59,15 @@ class Connection {
                                           PGRES_TUPLES_OK, PGRES_SINGLE_TUPLE);
         $res;
     }
+
+    method transaction(Str:D $mode, &block) {
+        self.execute("START TRANSACTION $mode");
+        {
+            KEEP { self.execute('COMMIT WORK') }
+            UNDO { self.execute('ROLLBACK WORK') }
+            &block();
+        }
+    }
 }
 
 class Result {

@@ -26,12 +26,14 @@ stdenv.mkDerivation {
 
         makeShare 'lib/Adrenaline/Poller/Monitor.pm6'
         makeShare 'lib/Adrenaline/Poller/Poll.pm6'
+        makeShare 'lib/Adrenaline/Poller/Schedule.pm6'
         makeShare 'lib/Database/PostgreSQL.pm6'
 
         makeShare 'bin/poller.p6'
         makeBin "$out/bin/poller" "$out/share/bin/poller.p6"
 
         makeTest 'Adrenaline/Poller/PollTest'
+        makeTest 'Adrenaline/Poller/ScheduleTest'
         makeTest 'Database/PostgreSQLTest'
     '';
 }

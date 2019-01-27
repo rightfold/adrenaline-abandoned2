@@ -1,0 +1,3 @@
+setup.sh sets up the database.
+
+We do not use the Sqitch verification feature.

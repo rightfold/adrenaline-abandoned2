@@ -1,0 +1,10 @@
+{
+    "autoload": {
+        "psr-4": {
+            "Adrenaline\\": ["lib/Adrenaline/"],
+            "Data\\": ["lib/Data/"],
+            "Database\\": ["lib/Database/"],
+            "Web\\": ["lib/Web/"]
+        }
+    }
+}

@@ -8,6 +8,10 @@ let
             moar   = pkgs.callPackage ./moar.nix {};
             nqp    = pkgs.callPackage ./nqp.nix {};
             rakudo = pkgs.callPackage ./rakudo.nix {};
+
+            phpPackages = pkgs.phpPackages // {
+                psalm = pkgs.callPackage ./psalm.nix {};
+            };
         };
     };
 in

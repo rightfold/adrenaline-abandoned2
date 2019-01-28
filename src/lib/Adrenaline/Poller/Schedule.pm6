@@ -1,6 +1,6 @@
 unit module Adrenaline::Poller::Schedule;
 
-use Adrenaline::Poller::Monitor :Monitor, :Ping;
+use Adrenaline::Poller::Monitor :Monitor, :OngoingPoll, :Ping;
 use Database::PostgreSQL :Connection;
 
 my constant FIND-MONITOR = q:to/SQL/;
@@ -28,6 +28,7 @@ SQL
 my constant INSERT-ONGOING-POLL = q:to/SQL/;
     INSERT INTO adrenaline.polls (monitor_id, timestamp)
     VALUES ($1, now())
+    RETURNING timestamp
 SQL
 
 sub make-monitor(Str:D $id, Str:D $o-type, Str $o-ping-host,
@@ -52,19 +53,24 @@ sub find-monitor(Connection:D $c --> Monitor) {
 }
 
 sub insert-ongoing-poll(Connection:D $c, Str:D $monitor-id) {
-    $c.execute(INSERT-ONGOING-POLL, $monitor-id);
+    my @result := $c.execute(INSERT-ONGOING-POLL, $monitor-id);
+    @result[0][0];
 }
 
-sub pop-monitor(Connection:D $c --> Monitor) is export(:pop-monitor) {
+sub pop-monitor(Connection:D $c --> OngoingPoll) is export(:pop-monitor) {
     # The SERIALIZABLE transaction isolation level is necessary to avoid the
     # scenario in which FIND-MONITOR returns the same monitor in two pollers,
     # prior to either performing INSERT-ONGOING-POLL.
     my $mode = 'ISOLATION LEVEL SERIALIZABLE';
 
     $c.transaction($mode, {
-        my $m = find-monitor($c);
-        insert-ongoing-poll($c, $m.id) if $m.defined;
-        $m;
+        my $monitor = find-monitor($c);
+        if $monitor.defined {
+            my $timestamp = insert-ongoing-poll($c, $monitor.id);
+            OngoingPoll.new(:$monitor, :$timestamp);
+        } else {
+            OngoingPoll;
+        }
     });
 }
 
@@ -98,10 +104,11 @@ This involves two steps:
 =item # Find a monitor that has not been polled since its poll interval ago.
 =item # Insert an ongoing poll into the polls table for this monitor.
 
-=head2 pop-monitor(Connection:D $c --> Monitor)
+=head2 pop-monitor(Connection:D $c --> OngoingPoll)
 
-This is the routine that was talked about previously. It may return no monitor;
-it will not block until one is available.
+This is the routine that was talked about previously. It returns an ongoing
+poll that can be used to update the status of the poll later. In case the
+queue is empty, this returns an undefined value.
 
 =head1 BUGS
 

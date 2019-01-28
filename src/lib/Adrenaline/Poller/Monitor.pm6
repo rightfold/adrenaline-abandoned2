@@ -11,3 +11,8 @@ class Monitor is export(:Monitor) {
     has Str    $.id;
     has Object $.object;
 }
+
+class OngoingPoll is export(:OngoingPoll) {
+    has Monitor $.monitor;
+    has Str     $.timestamp;
+}

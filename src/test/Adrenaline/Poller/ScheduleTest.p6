@@ -31,5 +31,5 @@ ok(!$m2.defined);
 ok(!$m2.defined);
 ok(?$m4.defined);
 
-is($m1.id, '124dfe98-6646-461b-83dc-9892907c6a0f');
-is($m4.id, '124dfe98-6646-461b-83dc-9892907c6a0f');
+is($m1.monitor.id, '124dfe98-6646-461b-83dc-9892907c6a0f');
+is($m4.monitor.id, '124dfe98-6646-461b-83dc-9892907c6a0f');

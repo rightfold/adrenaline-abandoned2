@@ -27,6 +27,7 @@ stdenv.mkDerivation {
         makeShare 'lib/Adrenaline/Poller/Monitor.pm6'
         makeShare 'lib/Adrenaline/Poller/Poll.pm6'
         makeShare 'lib/Adrenaline/Poller/Schedule.pm6'
+        makeShare 'lib/Adrenaline/Poller/Status.pm6'
         makeShare 'lib/Database/PostgreSQL.pm6'
 
         makeShare 'bin/poller.p6'
@@ -34,6 +35,7 @@ stdenv.mkDerivation {
 
         makeTest 'Adrenaline/Poller/PollTest'
         makeTest 'Adrenaline/Poller/ScheduleTest'
+        makeTest 'Adrenaline/Poller/StatusTest'
         makeTest 'Database/PostgreSQLTest'
     '';
 }

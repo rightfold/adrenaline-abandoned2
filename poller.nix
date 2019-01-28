@@ -24,6 +24,7 @@ stdenv.mkDerivation {
 
         mkdir -p "$out/share" "$out/bin" "$out/test"
 
+        makeShare 'lib/Adrenaline/Poller/Loop.pm6'
         makeShare 'lib/Adrenaline/Poller/Monitor.pm6'
         makeShare 'lib/Adrenaline/Poller/Poll.pm6'
         makeShare 'lib/Adrenaline/Poller/Schedule.pm6'

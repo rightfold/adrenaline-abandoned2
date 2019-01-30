@@ -1,7 +1,7 @@
 {lib, stdenv, makeWrapper, postgresql100, rakudo}:
 let libs = lib.makeLibraryPath [postgresql100]; in
 stdenv.mkDerivation {
-    name = "poller";
+    name = "adrenaline";
     src = ./src;
     buildInputs = [makeWrapper postgresql100 rakudo];
     phases = ["unpackPhase" "installPhase" "fixupPhase"];

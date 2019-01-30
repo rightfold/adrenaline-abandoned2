@@ -1,0 +1,2 @@
+These scripts provide various utilities for development. They are supposed to
+be invoked from the repository root, not from the scripts directory.

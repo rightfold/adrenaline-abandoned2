@@ -1,4 +1,4 @@
 {pkgs ? import ./nix/pkgs.nix {}}:
 {
-    poller = pkgs.callPackage ./poller.nix {};
+    adrenaline = pkgs.callPackage ./adrenaline.nix {};
 }

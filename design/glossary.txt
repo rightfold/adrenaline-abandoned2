@@ -32,6 +32,10 @@ event class
 
     Description of how to reduce statuses to events.
 
+group
+
+    A collection of monitors as designated by an administrator.
+
 guard
 
     Actor that is on duty to respond to alerts.
@@ -43,6 +47,10 @@ monitor
 object
 
     Entity that is being monitored.
+
+organization
+
+    A collection of groups as designated by an administrator.
 
 poller
 

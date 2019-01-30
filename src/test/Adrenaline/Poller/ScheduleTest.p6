@@ -9,14 +9,26 @@ my constant DSN =
 my $connection = Connection.new(DSN);
 
 $connection.execute(q:to/SQL/);
-    DELETE FROM adrenaline.monitors
+    DELETE FROM adrenaline.organizations
 SQL
 
 $connection.execute(q:to/SQL/);
-    INSERT INTO adrenaline.monitors (id, poll_interval, object_type,
+    INSERT INTO adrenaline.organizations (id)
+    VALUES ('74ca4117-c9ed-432c-99b4-b2dbe6dcd370')
+SQL
+
+$connection.execute(q:to/SQL/);
+    INSERT INTO adrenaline.groups (id, organization_id)
+    VALUES ('f1704f7b-1932-48c4-9eea-e4dd35db255b',
+            '74ca4117-c9ed-432c-99b4-b2dbe6dcd370')
+SQL
+
+$connection.execute(q:to/SQL/);
+    INSERT INTO adrenaline.monitors (id, group_id, poll_interval, object_type,
                                      object_ping_host, object_ping_timeout)
-    VALUES ('124dfe98-6646-461b-83dc-9892907c6a0f', '00:00:01', 'P',
-            'localhost', '00:00:00.5')
+    VALUES ('124dfe98-6646-461b-83dc-9892907c6a0f',
+            'f1704f7b-1932-48c4-9eea-e4dd35db255b',
+            '00:00:01', 'P', 'localhost', '00:00:00.5')
 SQL
 
 my $m1 = pop-monitor($connection);
